@@ -35,7 +35,7 @@ class M1359Strip
     //  static int redFromReset[PACKET_SIZE] = { 1, 1, 0, 0, 0, 0, 0, 0 };
     //  static int resetFromRed[PACKET_SIZE] = { 1, 1, 1, 1, 1, 1, 0, 0 };
     void pulse8(int pattern[]);
-    void quickPulse(int pattern[], int len);
+    void quickPulse(byte pattern[], int len, int delayMuSec);
 
     void setColor(M1359Color value);
     void setBrightness(uint8_t value);

@@ -35,13 +35,14 @@ void M1359Strip::pulse(int count) {
 // this one will remove voltate on a 1, and return it on a 0
 // repeated values will *leave* the voltage were it was at
 // there is no artificial delay, which means it should be about 3-4 MHz (I think)
-void M1359Strip::quickPulse(int pattern[], int len) {
+void M1359Strip::quickPulse(byte pattern[], int len, int delayMuSec) {
   for (int i=0; i<len; i++) {
     switch (pattern[i]) {
       case 0: digitalWrite(_vcc_pin, HIGH); break;
       case 1: digitalWrite(_vcc_pin, LOW); break;
       // no default
     }
+    delayMicroseconds(delayMuSec);
   }
   // we do restore the high, though
   digitalWrite(_vcc_pin, HIGH);
