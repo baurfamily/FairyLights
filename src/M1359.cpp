@@ -61,9 +61,10 @@ void M1359Strip::pulse8(int pattern[]) {
 }
 
 void M1359Strip::setColor(M1359Color value) {
+  pulse(M1359_COLOR_COUNT-_color);
   _color = value;
   if (_lit) {
-    reset();
+    // pulses to _color
     pulse(_color);
   }
 }
@@ -100,7 +101,7 @@ void M1359Strip::off() {
 
 void M1359Strip::display() {
   //uses PWM to set brightness (this may be "too fast")
-//  analogWrite(_vcc_pin, value);
+//  analogWrite(_vcc_pin, (255*_brightness)/M1359_PWM_MAX);
   on();
   pulse(M1359_COLOR_COUNT - _color);
   delayMicroseconds(M1359_PWM_MAX - _brightness);

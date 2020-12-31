@@ -1,13 +1,14 @@
-
 #ifndef M1359_h
 #define M1359_h
+
+#include <Arduino.h>
 
 #define M1359_PACKET_SIZE 8
 #define M1359_PACKET_DELAY 20
 
 // these were fairly arbitrary picks
 // it looked good to *our* eyes
-#define M1359_PWM_MIN 1000
+#define M1359_PWM_MIN 0
 #define M1359_PWM_MAX 15000
 
 #define M1359_OFF 0
@@ -20,8 +21,6 @@
 #define M1359_WHITE 7
 
 #define M1359_COLOR_COUNT 8
-
-#include "Arduino.h"
 
 typedef int pin;
 typedef uint8_t M1359Color;
