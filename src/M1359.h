@@ -45,16 +45,15 @@ class M1359Strip
     void off();
     void reset();
     void display();
+    void display(int approxMs);
 
     void fade(M1359Color fromColor, M1359Color toColor);
 
   private:
     int _vcc_pin;
-    uint8_t _brightness;
+    int _brightness;
     uint8_t _color; // actually, 3 bits
     bool _lit;
-
-    int brightnessVal();
 };
 
 #endif
