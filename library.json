@@ -1,7 +1,7 @@
 {
-  "name": "M1359",
-  "description": "M1359 is a library to drive 2 wire fairy lights.",
-  "keywords": "led,noise,rgb,math,fast",
+  "name": "FairyLights",
+  "description": "FairyLights is a library to drive 2 wire fairy lights (like M1359L).",
+  "keywords": "led,fairy",
   "authors": [
       {
           "name": "Eric Baur",
@@ -16,11 +16,11 @@
   ],
   "repository": {
       "type": "git",
-      "url": "https://github.com/baurfamily/M1359.git"
+      "url": "https://github.com/baurfamily/FairyLights.git"
   },
   "version": "0.0.1",
   "license": "MIT",
-  "homepage": "https://github.com/baurfamily/M1359.git",
+  "homepage": "https://github.com/baurfamily/FairyLights.git",
   "frameworks": "arduino",
   "platforms": "atmelavr, atmelsam, freescalekinetis, nordicnrf51, nxplpc, ststm32, teensy, espressif8266, espressif32, nordicnrf52",
   "export": {

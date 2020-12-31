@@ -2,13 +2,13 @@
 
 #define VCC_PIN 13
 
-#include <M1359.h>
+#include <FairlyLights.h>
 
-M1359Strip strip(VCC_PIN);
+FairlyLights strip(FL_M1359L, VCC_PIN);
 
 void setup() {
   strip.on();
-  strip.setColor(M1359_BLUE);
+  strip.setColor(FL_BLUE);
 }
 
 void loop() {
