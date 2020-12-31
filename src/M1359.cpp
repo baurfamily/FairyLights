@@ -4,7 +4,7 @@
 M1359Strip::M1359Strip(pin vcc_pin) {
   _vcc_pin = vcc_pin;
   _brightness = 255;
-  _color = 1;
+  _color = 0;
   
   // init our output pings
   pinMode(_vcc_pin, OUTPUT);
@@ -31,7 +31,7 @@ void M1359Strip::pulse(int count) {
   }
 }
 
-//confusingly, this works different than the other pulse functions
+// confusingly, this works different than the other pulse functions
 // this one will remove voltate on a 1, and return it on a 0
 // repeated values will *leave* the voltage were it was at
 // there is no artificial delay, which means it should be about 3-4 MHz (I think)
@@ -69,7 +69,7 @@ void M1359Strip::setColor(M1359Color value) {
 }
 
 void M1359Strip::setBrightness(uint8_t value) {
-  _brightness = value;
+  _brightness = map( value, 0, 255, M1359_PWM_MIN, M1359_PWM_MAX);;
 }
 
 // may be borked - originally between 10-20 ms delay
@@ -77,11 +77,14 @@ void M1359Strip::reset() {
   digitalWrite(_vcc_pin, LOW);
   delay(20);
   digitalWrite(_vcc_pin, HIGH);
+  pulseOnce();
+  pulse(_color);
+  _lit = true;
 }
 
 void M1359Strip::on() {
   if (_lit) {
-    reset();
+    return;
   }
   pulse(_color);
   _lit = true;
@@ -95,18 +98,22 @@ void M1359Strip::off() {
   _lit = false;
 }
 
-int M1359Strip::brightnessVal() {
-  return map( _brightness, 0, 255, M1359_PWM_MIN, M1359_PWM_MAX);
-}
-
 void M1359Strip::display() {
   //uses PWM to set brightness (this may be "too fast")
-//  analogWrite(_vcc_pin, value); 
-
+//  analogWrite(_vcc_pin, value);
+  on();
   pulse(M1359_COLOR_COUNT - _color);
-  delayMicroseconds(brightnessVal());
+  delayMicroseconds(M1359_PWM_MAX - _brightness);
   pulse(_color);
-  delayMicroseconds(M1359_PWM_MAX - brightnessVal());
+  delayMicroseconds(_brightness);
+}
+
+void M1359Strip::display(int approxMs) {
+  int loops = (1000 * approxMs) / M1359_PWM_MAX;
+  reset();
+  for(int i=0; i<loops; i++) {
+    display();
+  }
 }
 
 void M1359Strip::fade(M1359Color fromColor, M1359Color toColor) {
@@ -127,7 +134,7 @@ void M1359Strip::fade(M1359Color fromColor, M1359Color toColor) {
     
     // get to next color, may have to wrap
     pulse(distance);
-    delayMicroseconds(M1359_PWM_MAX - brightnessVal());
+    delayMicroseconds(M1359_PWM_MAX - _brightness);
     
     // back to black (ie: effective reset)s
     pulse(M1359_COLOR_COUNT - toColor);
