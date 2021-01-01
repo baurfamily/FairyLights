@@ -23,38 +23,46 @@
 #define FL_COLOR_COUNT 8
 
 typedef int pin;
-typedef uint8_t FLColor;
 
-enum FLType { M1359L };
+enum fl_type { M1359L };
+
+enum fl_color {
+  Black,
+  Red,
+  Green,
+  Yellow,
+  Blue,
+  Purple,
+  Cyan,
+  White
+};
 
 class FairyLights
 {
   public:
-    FairyLights(FLType lightType, pin vcc);
-    void pulseOnce();
-    void pulse(int count);
+    FairyLights(fl_type lightType, pin vcc);
     
-    //  static int redFromReset[PACKET_SIZE] = { 1, 1, 0, 0, 0, 0, 0, 0 };
-    //  static int resetFromRed[PACKET_SIZE] = { 1, 1, 1, 1, 1, 1, 0, 0 };
-    void pulse8(int pattern[]);
+    void pulse8(byte pattern[]);
     void quickPulse(byte pattern[], int len, int delayMuSec);
 
-    void setColor(FLColor value);
+    void reset();
+    void setBlack();
+    void nextColor();
+    void setColor(fl_color value);
     void setBrightness(uint8_t value);
 
-    void on();
-    void off();
-    void reset();
     void display();
     void display(int approxMs);
 
-    void fade(FLColor fromColor, FLColor toColor);
+    void fade(fl_color fromColor, fl_color toColor);
 
   private:
     int _vcc_pin;
     int _brightness;
     uint8_t _color; // actually, 3 bits
-    bool _lit;
+
+    void pulse();
+    void pulse(int count);
 };
 
 #endif
