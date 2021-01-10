@@ -3,36 +3,19 @@
 
 #include <Arduino.h>
 
-#define M1359L_PACKET_SIZE 8
-#define M1359L_PACKET_DELAY 20
-
-// these were fairly arbitrary picks
-// it looked good to *our* eyes
-#define M1359L_PWM_MIN 0
-#define M1359L_PWM_MAX 15000
-
-#define FL_OFF 0
-#define FL_RED 1
-#define FL_GREEN 2
-#define FL_YELLOW 3
-#define FL_BLUE 4
-#define FL_PURPLE 5
-#define FL_CYAN 6
-#define FL_WHITE 7
-
-#define FL_COLOR_COUNT 8
-
 typedef int pin;
 
-enum fl_type { M1359L };
+enum fl_type { M1359L, TwoWire };
 
+// bad coupling: this order is important to
+// the TwoWireStrip class, so keep it this way!
 enum fl_color {
   Black,
   Red,
   Green,
   Yellow,
   Blue,
-  Purple,
+  Magenta,
   Cyan,
   White
 };
@@ -40,29 +23,28 @@ enum fl_color {
 class FairyLights
 {
   public:
-    FairyLights(fl_type lightType, pin vcc);
+    //FairyLights(fl_type lightType, byte pins[]);
+    // virtual ~FairyLights() { };
     
-    void pulse8(byte pattern[]);
-    void quickPulse(byte pattern[], int len, int delayMuSec);
+    virtual void setBlack() { };
+    virtual void nextColor() { };
 
-    void reset();
-    void setBlack();
-    void nextColor();
-    void setColor(fl_color value);
-    void setBrightness(uint8_t value);
+    // generally speaking, "named" colors will be more accurate
+    virtual void setColor(fl_color value) { };
+    // virtual void setRGB(byte red, byte green, byte blue);
 
-    void display();
-    void display(int approxMs);
+    virtual void setBrightness(byte value) { };
 
-    void fade(fl_color fromColor, fl_color toColor);
+    // depending on the type, this may be transient
+    virtual void display() { };
 
-  private:
-    int _vcc_pin;
-    int _brightness;
-    uint8_t _color; // actually, 3 bits
+    // this is the only guarented way to get a color
+    virtual void display(int approxMs) { };
 
-    void pulse();
-    void pulse(int count);
+    // fades from one color to another
+    virtual void fade(fl_color fromColor, fl_color toColor) { };
 };
+
+FairyLights FairyLightsFactory(fl_type lightType, pin pins[]);
 
 #endif
