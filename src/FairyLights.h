@@ -1,6 +1,12 @@
 #ifndef FL_h
 #define FL_h
 
+// these were fairly arbitrary picks
+// it looked good to *our* eyes
+#define FL_PWM_MIN  1000
+#define FL_PWM_MAX 15000
+
+
 #include <Arduino.h>
 
 typedef int pin;

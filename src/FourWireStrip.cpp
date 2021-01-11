@@ -52,6 +52,8 @@ void FourWireStrip::nextColorEven() {
 }
 
 void FourWireStrip::setColor(fl_color value) {
+  Serial.print("Setting color: ");
+  Serial.println(value);
   setColorOdd(value);
   setColorEven(value);
 }
@@ -106,20 +108,40 @@ void FourWireStrip::setBrightness(byte value) {
 }
 
 void FourWireStrip::display() {
-  displayRedOdd();
-  delayMicroseconds(_red_odd);
-  displayRedEven();
-  delayMicroseconds(_red_even);
+  if (_red_odd>0) {
+    displayRedOdd();
+    delayMicroseconds(10*_red_odd);
+  }
+  if (_red_even>0) {
+    displayRedEven();
+    delayMicroseconds(10*_red_even);
+  }
   
-  displayGreenOdd();
-  delayMicroseconds(_green_odd);
-  displayGreenEven();
-  delayMicroseconds(_green_even);
+  if (_green_odd>0) {
+    displayGreenOdd();
+    delayMicroseconds(10*_green_odd);
+  }
+  if (_green_even>0) {
+    displayGreenEven();
+    delayMicroseconds(10*_green_even);
+  }
   
-  displayBlueOdd();
-  delayMicroseconds(_blue_odd);
-  displayBlueEven();
-  delayMicroseconds(_blue_even);
+  if (_blue_odd>0) {
+    displayBlueOdd();
+    delayMicroseconds(10*_blue_odd);
+  }
+  if (_blue_even>0) {
+    displayBlueEven();
+    delayMicroseconds(10*_blue_even);
+  }
+}
+
+void FourWireStrip::display(int approxMs) {
+  unsigned long time = millis();
+
+  while (millis()-time < approxMs) {
+    display();
+  }
 }
 
 void FourWireStrip::displayRedOdd() {
@@ -188,13 +210,6 @@ void FourWireStrip::displayBlueEven() {
   digitalWrite(_blue_pin, LOW);
 }
 
-void FourWireStrip::display(int approxMs) {
-  unsigned long time = micros();
-
-  while (micros()-time < 1000*1000*approxMs) {
-    display();
-  }
-}
 
 void FourWireStrip::fade(fl_color fromColor, fl_color toColor) {
 

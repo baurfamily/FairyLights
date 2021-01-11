@@ -37,7 +37,7 @@ class FourWireStrip: public FairyLights {
     pin _red_pin;
     pin _blue_pin;
 
-    byte _brightness;
+    unsigned long _brightness;
     
     // the underlying RGB values might get out of 
     // sync from the "color" - this is expected    

@@ -1,17 +1,12 @@
-#ifndef TWO_WIRE_h
-#define TWO_WIRE_h
+#ifndef M1359L_h
+#define M1359L_h
 
 #include <Arduino.h>
 
 #include "FairyLights.h"
 
-#define TWO_WIRE_PACKET_SIZE 8
-#define TWO_WIRE_PACKET_DELAY 20
-
-// these were fairly arbitrary picks
-// it looked good to *our* eyes
-#define TWO_WIRE_PWM_MIN 0
-#define TWO_WIRE_PWM_MAX 15000
+#define M1359L_PACKET_SIZE 8
+#define M1359L_PACKET_DELAY 20
 
 class TwoWireStrip: public FairyLights {
   public:
@@ -34,9 +29,10 @@ class TwoWireStrip: public FairyLights {
 
   private:
     byte _vcc_pin;
-    byte _brightness;
     byte _color; // actually, 3 bits
 
+    unsigned long _brightness;
+    
     void pulse();
     void pulse(int count);
 };
