@@ -103,36 +103,44 @@ void FourWireStrip::setRGBEven(byte red, byte green, byte blue) {
   _red_even = red; _green_even = green; _blue_even = blue;
 }
 
-void FourWireStrip::setBrightness(byte value) {
+void FourWireStrip::setBrightness(byte value)
+{
   _brightness = value;
 }
 
 void FourWireStrip::display() {
+  // if (_brightness != FL_PWM_MAX)
+  // {
+  //   displayBlackOdd();
+  //   displayBlackEven();
+  //   delayMicroseconds(FL_PWM_MAX - _brightness);
+  // }
+
   if (_red_odd>0) {
-    displayRedOdd();
-    delayMicroseconds(10*_red_odd);
+    displayRedOdd();  
+    delayMicroseconds(pwm_value(_red_odd));
   }
   if (_red_even>0) {
     displayRedEven();
-    delayMicroseconds(10*_red_even);
+    delayMicroseconds(pwm_value(_red_even));
   }
   
   if (_green_odd>0) {
     displayGreenOdd();
-    delayMicroseconds(10*_green_odd);
+    delayMicroseconds(pwm_value(_green_odd));
   }
   if (_green_even>0) {
     displayGreenEven();
-    delayMicroseconds(10*_green_even);
+    delayMicroseconds(pwm_value(_green_even));
   }
   
   if (_blue_odd>0) {
     displayBlueOdd();
-    delayMicroseconds(10*_blue_odd);
+    delayMicroseconds(pwm_value(_blue_odd));
   }
   if (_blue_even>0) {
     displayBlueEven();
-    delayMicroseconds(10*_blue_even);
+    delayMicroseconds(pwm_value(_blue_even));
   }
 }
 
@@ -144,9 +152,33 @@ void FourWireStrip::display(int approxMs) {
   }
 }
 
-void FourWireStrip::displayRedOdd() {
+void FourWireStrip::displayBlackOdd()
+{
+  pinMode(_center_pin, OUTPUT);
+  digitalWrite(_center_pin, LOW);
+  
+  pinMode(_red_pin, OUTPUT);
+  digitalWrite(_red_pin, LOW);
+  
+  pinMode(_blue_pin, OUTPUT);
+  digitalWrite(_blue_pin, LOW);
+}
+
+void FourWireStrip::displayBlackEven()
+{  
   pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, HIGH);
+  
+  pinMode(_red_pin, OUTPUT);
+  digitalWrite(_red_pin, LOW);
+  
+  digitalWrite(_blue_pin, LOW);
+  pinMode(_blue_pin, INPUT);
+}
+
+void FourWireStrip::displayRedOdd() {
+  pinMode(_center_pin, OUTPUT);
+  analogWrite(_center_pin, _red_odd*_brightness/255);
   
   pinMode(_red_pin, OUTPUT);
   digitalWrite(_red_pin, LOW);
@@ -160,7 +192,7 @@ void FourWireStrip::displayRedEven() {
   digitalWrite(_center_pin, LOW);
   
   pinMode(_red_pin, OUTPUT);
-  digitalWrite(_red_pin, HIGH);
+  analogWrite(_red_pin, _red_even*_brightness/255);
   
   digitalWrite(_blue_pin, LOW);
   pinMode(_blue_pin, INPUT);
@@ -174,7 +206,7 @@ void FourWireStrip::displayGreenOdd() {
   digitalWrite(_red_pin, LOW);
   
   pinMode(_blue_pin, OUTPUT);
-  digitalWrite(_blue_pin, HIGH);
+  analogWrite(_blue_pin, _green_odd*_brightness/255);
 }
 
 void FourWireStrip::displayGreenEven() {
@@ -182,7 +214,7 @@ void FourWireStrip::displayGreenEven() {
   pinMode(_center_pin, INPUT);
   
   pinMode(_red_pin, OUTPUT);
-  digitalWrite(_red_pin, HIGH);
+  analogWrite(_red_pin, _green_even*_brightness/255);
   
   pinMode(_blue_pin, OUTPUT);
   digitalWrite(_blue_pin, LOW);
@@ -196,12 +228,12 @@ void FourWireStrip::displayBlueOdd() {
   pinMode(_red_pin, INPUT);
   
   pinMode(_blue_pin, OUTPUT);
-  digitalWrite(_blue_pin, HIGH);  
+  analogWrite(_blue_pin, _blue_odd*_brightness/255);
 }
 
 void FourWireStrip::displayBlueEven() {
   pinMode(_center_pin, OUTPUT);
-  digitalWrite(_center_pin, HIGH);
+  analogWrite(_center_pin, _blue_even*_brightness/255);
   
   digitalWrite(_red_pin, LOW);
   pinMode(_red_pin, INPUT);

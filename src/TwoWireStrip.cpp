@@ -100,12 +100,7 @@ void TwoWireStrip::setColor(fl_color value)
 
 void TwoWireStrip::setBrightness(uint8_t value)
 {
-  Serial.print("Setting brightness: ");
-  Serial.println(value);
   _brightness = map(value, 0, 255, FL_PWM_MIN, FL_PWM_MAX);
-  Serial.print("Setting to: ");
-  Serial.println(_brightness);
-
 }
 
 // may be borked - originally between 10-20 ms delay
