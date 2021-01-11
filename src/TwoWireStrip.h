@@ -13,8 +13,6 @@
 #define TWO_WIRE_PWM_MIN 0
 #define TWO_WIRE_PWM_MAX 15000
 
-#define TWO_WIRE_COLOR_COUNT 8
-
 class TwoWireStrip: public FairyLights {
   public:
     TwoWireStrip(pin vcc);
@@ -22,6 +20,7 @@ class TwoWireStrip: public FairyLights {
     void pulse8(byte pattern[]);
     void quickPulse(byte pattern[], int len, int delayMuSec);
 
+    // overrides
     void reset();
     void setBlack();
     void nextColor();

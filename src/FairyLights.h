@@ -5,7 +5,12 @@
 
 typedef int pin;
 
-enum fl_type { M1359L, TwoWire };
+enum fl_type {
+  M1359L,
+  TwoWire,
+  FourWire,
+  TypeCount
+};
 
 // bad coupling: this order is important to
 // the TwoWireStrip class, so keep it this way!
@@ -17,7 +22,8 @@ enum fl_color {
   Blue,
   Magenta,
   Cyan,
-  White
+  White,
+  ColorCount
 };
 
 class FairyLights
