@@ -11,9 +11,7 @@ Specifically, the red LED has one pin of it's own, and one shared with the green
 
 This means that you can easily light anyone of red/green/blue by driving one pin high and one to groud while leaving the other two pins "off" (high-impedence). For blue and red that's straight-forward, but it feels weird for green since you have to drive one of the blue pins high and one of the red pins low - and the others off.
 
-This is my approximation of what's going on:
-
-<iframe width="450" height="280" src="https://www.tinkercad.com/embed/hmdHKDVvpSH?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+This is my [approximation](https://www.tinkercad.com/things/hmdHKDVvpSH) of what's going on.
 
 ### Other colors
 Secondary (and other) colors can be accomplished by pulse width modulation (PWM) - lighting up the LEDs quickly and changing out which is lit. Some colors can be produced statically, but the join pins makes it hard to control as there are only a few combinations that are practical.
