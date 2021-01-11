@@ -50,6 +50,16 @@ class FourWireStrip: public FairyLights {
     byte _red_even;
     byte _green_even;
     byte _blue_even;
+
+
+    void displayRedOdd();
+    void displayRedEven();
+
+    void displayGreenOdd();
+    void displayGreenEven();
+
+    void displayBlueOdd();
+    void displayBlueEven();
 };
 
 #endif

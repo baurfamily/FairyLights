@@ -56,5 +56,3 @@ FairyLights strip = FairyLightsFactory(FourWire, pins);
 
 FourWireStrip strip = FairyLightsFactory(BYPASS_PIN, CENTER_PIN, RED_PIN, BLUE_PIN);
 ```
-
-###

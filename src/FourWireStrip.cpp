@@ -18,6 +18,10 @@ FourWireStrip::FourWireStrip(pin bypass, pin center, pin red, pin blue) {
   _red_even = 255;
   _green_even = 255;
   _blue_even = 255;
+
+  // why even configure it?
+  digitalWrite(_bypass_pin, LOW);
+  pinMode(_bypass_pin, INPUT);
 }
 
 // overrides
@@ -102,13 +106,94 @@ void FourWireStrip::setBrightness(byte value) {
 }
 
 void FourWireStrip::display() {
+  displayRedOdd();
+  delayMicroseconds(_red_odd);
+  displayRedEven();
+  delayMicroseconds(_red_even);
+  
+  displayGreenOdd();
+  delayMicroseconds(_green_odd);
+  displayGreenEven();
+  delayMicroseconds(_green_even);
+  
+  displayBlueOdd();
+  delayMicroseconds(_blue_odd);
+  displayBlueEven();
+  delayMicroseconds(_blue_even);
+}
+
+void FourWireStrip::displayRedOdd() {
+  pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, HIGH);
+  
+  pinMode(_red_pin, OUTPUT);
   digitalWrite(_red_pin, LOW);
+  
+  digitalWrite(_blue_pin, LOW);
+  pinMode(_blue_pin, INPUT);
+}
+
+void FourWireStrip::displayRedEven() {
+  pinMode(_center_pin, OUTPUT);
+  digitalWrite(_center_pin, LOW);
+  
+  pinMode(_red_pin, OUTPUT);
+  digitalWrite(_red_pin, HIGH);
+  
+  digitalWrite(_blue_pin, LOW);
+  pinMode(_blue_pin, INPUT);
+}
+
+void FourWireStrip::displayGreenOdd() {
+  digitalWrite(_center_pin, LOW);
+  pinMode(_center_pin, INPUT);
+  
+  pinMode(_red_pin, OUTPUT);
+  digitalWrite(_red_pin, LOW);
+  
+  pinMode(_blue_pin, OUTPUT);
+  digitalWrite(_blue_pin, HIGH);
+}
+
+void FourWireStrip::displayGreenEven() {
+  digitalWrite(_center_pin, LOW);
+  pinMode(_center_pin, INPUT);
+  
+  pinMode(_red_pin, OUTPUT);
+  digitalWrite(_red_pin, HIGH);
+  
+  pinMode(_blue_pin, OUTPUT);
+  digitalWrite(_blue_pin, LOW);
+}
+
+void FourWireStrip::displayBlueOdd() {
+  pinMode(_center_pin, OUTPUT);
+  digitalWrite(_center_pin, LOW);
+  
+  digitalWrite(_red_pin, LOW);
+  pinMode(_red_pin, INPUT);
+  
+  pinMode(_blue_pin, OUTPUT);
+  digitalWrite(_blue_pin, HIGH);  
+}
+
+void FourWireStrip::displayBlueEven() {
+  pinMode(_center_pin, OUTPUT);
+  digitalWrite(_center_pin, HIGH);
+  
+  digitalWrite(_red_pin, LOW);
+  pinMode(_red_pin, INPUT);
+  
+  pinMode(_blue_pin, OUTPUT);
   digitalWrite(_blue_pin, LOW);
 }
 
 void FourWireStrip::display(int approxMs) {
+  unsigned long time = micros();
 
+  while (micros()-time < 1000*1000*approxMs) {
+    display();
+  }
 }
 
 void FourWireStrip::fade(fl_color fromColor, fl_color toColor) {
