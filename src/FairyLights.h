@@ -1,13 +1,6 @@
 #ifndef FL_h
 #define FL_h
 
-// these were fairly arbitrary picks
-// it looked good to *our* eyes
-#define FL_PWM_MIN  1000
-#define FL_PWM_MAX 15000
-
-// #define pwm_value(x) map(x, 0, 255, FL_PWM_MIN, FL_PWM_MAX)
-#define pwm_value(x) x
 
 #include <Arduino.h>
 

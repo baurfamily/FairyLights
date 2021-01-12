@@ -108,14 +108,8 @@ void FourWireStrip::setBrightness(byte value)
   _brightness = value;
 }
 
-void FourWireStrip::display() {
-  // if (_brightness != FL_PWM_MAX)
-  // {
-  //   displayBlackOdd();
-  //   displayBlackEven();
-  //   delayMicroseconds(FL_PWM_MAX - _brightness);
-  // }
-
+void FourWireStrip::display()
+{
   if (_red_odd>0) {
     displayRedOdd();  
     delayMicroseconds(pwm_value(_red_odd));
@@ -144,7 +138,8 @@ void FourWireStrip::display() {
   }
 }
 
-void FourWireStrip::display(int approxMs) {
+void FourWireStrip::display(int approxMs)
+{
   unsigned long time = millis();
 
   while (millis()-time < approxMs) {

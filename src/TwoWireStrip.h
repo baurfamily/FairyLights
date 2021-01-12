@@ -5,6 +5,12 @@
 
 #include "FairyLights.h"
 
+
+// these were fairly arbitrary picks
+// it looked good to *our* eyes
+#define TW_PWM_MIN  1000
+#define TW_PWM_MAX 15000
+
 #define M1359L_PACKET_SIZE 8
 #define M1359L_PACKET_DELAY 20
 

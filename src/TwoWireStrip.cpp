@@ -100,7 +100,7 @@ void TwoWireStrip::setColor(fl_color value)
 
 void TwoWireStrip::setBrightness(uint8_t value)
 {
-  _brightness = map(value, 0, 255, FL_PWM_MIN, FL_PWM_MAX);
+  _brightness = map(value, 0, 255, TW_PWM_MIN, TW_PWM_MAX);
 }
 
 // may be borked - originally between 10-20 ms delay
@@ -118,13 +118,13 @@ void TwoWireStrip::display()
 {
   // can't use the analogWrite method, it looks like pulses
   // to the ICs in the strip and they freak out
-  if (_brightness != FL_PWM_MAX)
+  if (_brightness != TW_PWM_MAX)
   {
     pulse(fl_color::ColorCount - _color);
   }
-  delayMicroseconds(FL_PWM_MAX - _brightness);
+  delayMicroseconds(TW_PWM_MAX - _brightness);
   
-  if (_brightness != FL_PWM_MAX)
+  if (_brightness != TW_PWM_MAX)
   {
     pulse(_color);
   }
@@ -154,7 +154,7 @@ void TwoWireStrip::fade(fl_color fromColor, fl_color toColor)
   //this may be backwards...
   for (int i = 0; i <= 255;)
   {
-    int fadeVal = map(i, 0, 255, FL_PWM_MIN, FL_PWM_MAX);
+    int fadeVal = map(i, 0, 255, TW_PWM_MIN, TW_PWM_MAX);
 
     // start at initial color
     pulse(fromColor);
@@ -162,7 +162,7 @@ void TwoWireStrip::fade(fl_color fromColor, fl_color toColor)
 
     // get to next color, may have to wrap
     pulse(distance);
-    delayMicroseconds(FL_PWM_MAX - _brightness);
+    delayMicroseconds(TW_PWM_MAX - _brightness);
 
     // back to black (ie: effective reset)s
     pulse(fl_color::ColorCount - toColor);
