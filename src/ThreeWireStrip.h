@@ -6,15 +6,15 @@
 
 // these were fairly arbitrary picks
 // it looked good to *our* eyes
-#define FW_PWM_MIN  100
-#define FW_PWM_MAX 1000
+#define TW_PWM_MIN  100
+#define TW_PWM_MAX 1000
 
-#define pwm_value(x) map(x, 0, 255, FW_PWM_MIN, FW_PWM_MAX)
+#define pwm_value(x) map(x, 0, 255, TW_PWM_MIN, TW_PWM_MAX)
 // #define pwm_value(x) x
 
-class FourWireStrip: public FairyLights {
+class ThreeWireStrip: public FairyLights {
   public:
-    FourWireStrip(pin bypass, pin center, pin red, pin blue);
+    ThreeWireStrip(pin center, pin red, pin blue);
     
     void reset();
 
@@ -41,7 +41,6 @@ class FourWireStrip: public FairyLights {
 
   private:
     pin _center_pin;
-    pin _bypass_pin;
     pin _red_pin;
     pin _blue_pin;
 

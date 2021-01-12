@@ -9,7 +9,7 @@ typedef int pin;
 enum fl_type {
   M1359L,
   TwoWire,
-  FourWire,
+  ThreeWire,
   TypeCount
 };
 
@@ -26,6 +26,7 @@ enum fl_color {
   White,
   ColorCount
 };
+
 
 class FairyLights
 {
@@ -52,6 +53,6 @@ class FairyLights
     virtual void fade(fl_color fromColor, fl_color toColor) { };
 };
 
-FairyLights FairyLightsFactory(fl_type lightType, pin pins[]);
+FairyLights* FairyLightsFactory(fl_type lightType, pin pins[]);
 
 #endif

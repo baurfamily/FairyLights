@@ -1,7 +1,7 @@
-#include "FourWireStrip.h"
+#include "ThreeWireStrip.h"
 
-FourWireStrip::FourWireStrip(pin bypass, pin center, pin red, pin blue) {
-  _bypass_pin = bypass;
+ThreeWireStrip::ThreeWireStrip(pin center, pin red, pin blue)
+{
   _center_pin = center;
   _red_pin = red;
   _blue_pin = blue;
@@ -18,14 +18,10 @@ FourWireStrip::FourWireStrip(pin bypass, pin center, pin red, pin blue) {
   _red_even = 255;
   _green_even = 255;
   _blue_even = 255;
-
-  // why even configure it?
-  digitalWrite(_bypass_pin, LOW);
-  pinMode(_bypass_pin, INPUT);
 }
 
 // overrides
-void FourWireStrip::setBlack() {
+void ThreeWireStrip::setBlack() {
   _red_odd = 0;
   _green_odd = 0;
   _blue_odd = 0;
@@ -34,31 +30,31 @@ void FourWireStrip::setBlack() {
   _blue_even = 0;
 }
 
-void FourWireStrip::nextColor() {
+void ThreeWireStrip::nextColor() {
   nextColorOdd();
   nextColorEven();
 }
 
-void FourWireStrip::nextColorOdd() {
+void ThreeWireStrip::nextColorOdd() {
   fl_color odd_color = (fl_color)((_color_odd+1) % fl_color::ColorCount);
   if (odd_color == Black) odd_color = Red;
   setColorOdd(odd_color);
 }
 
-void FourWireStrip::nextColorEven() {
+void ThreeWireStrip::nextColorEven() {
   fl_color even_color = (fl_color)((_color_even+1) % fl_color::ColorCount);
   if (even_color == Black) even_color = Red;
   setColorEven(even_color);
 }
 
-void FourWireStrip::setColor(fl_color value) {
+void ThreeWireStrip::setColor(fl_color value) {
   Serial.print("Setting color: ");
   Serial.println(value);
   setColorOdd(value);
   setColorEven(value);
 }
 
-void FourWireStrip::setColorOdd(fl_color value) {
+void ThreeWireStrip::setColorOdd(fl_color value) {
   if (value != ColorCount) {
     _color_odd = value;
   }
@@ -74,7 +70,7 @@ void FourWireStrip::setColorOdd(fl_color value) {
   }
 }
 
-void FourWireStrip::setColorEven(fl_color value) {
+void ThreeWireStrip::setColorEven(fl_color value) {
   if (value != ColorCount) {
     _color_even = value;
   }
@@ -90,25 +86,25 @@ void FourWireStrip::setColorEven(fl_color value) {
   }
 }
 
-void FourWireStrip::setRGB(byte red, byte green, byte blue) {
+void ThreeWireStrip::setRGB(byte red, byte green, byte blue) {
   setRGBOdd(red, green, blue);
   setRGBEven(red, green, blue);
 }
 
-void FourWireStrip::setRGBOdd(byte red, byte green, byte blue) {
+void ThreeWireStrip::setRGBOdd(byte red, byte green, byte blue) {
   _red_odd = red; _green_odd = green; _blue_odd = blue;
 }
 
-void FourWireStrip::setRGBEven(byte red, byte green, byte blue) {
+void ThreeWireStrip::setRGBEven(byte red, byte green, byte blue) {
   _red_even = red; _green_even = green; _blue_even = blue;
 }
 
-void FourWireStrip::setBrightness(byte value)
+void ThreeWireStrip::setBrightness(byte value)
 {
   _brightness = value;
 }
 
-void FourWireStrip::display()
+void ThreeWireStrip::display()
 {
   if (_red_odd>0) {
     displayRedOdd();  
@@ -138,7 +134,7 @@ void FourWireStrip::display()
   }
 }
 
-void FourWireStrip::display(int approxMs)
+void ThreeWireStrip::display(int approxMs)
 {
   unsigned long time = millis();
 
@@ -147,7 +143,7 @@ void FourWireStrip::display(int approxMs)
   }
 }
 
-void FourWireStrip::displayBlackOdd()
+void ThreeWireStrip::displayBlackOdd()
 {
   pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, LOW);
@@ -159,7 +155,7 @@ void FourWireStrip::displayBlackOdd()
   digitalWrite(_blue_pin, LOW);
 }
 
-void FourWireStrip::displayBlackEven()
+void ThreeWireStrip::displayBlackEven()
 {  
   pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, HIGH);
@@ -171,7 +167,7 @@ void FourWireStrip::displayBlackEven()
   pinMode(_blue_pin, INPUT);
 }
 
-void FourWireStrip::displayRedOdd() {
+void ThreeWireStrip::displayRedOdd() {
   pinMode(_center_pin, OUTPUT);
   analogWrite(_center_pin, _red_odd*_brightness/255);
   
@@ -182,7 +178,7 @@ void FourWireStrip::displayRedOdd() {
   pinMode(_blue_pin, INPUT);
 }
 
-void FourWireStrip::displayRedEven() {
+void ThreeWireStrip::displayRedEven() {
   pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, LOW);
   
@@ -193,7 +189,7 @@ void FourWireStrip::displayRedEven() {
   pinMode(_blue_pin, INPUT);
 }
 
-void FourWireStrip::displayGreenOdd() {
+void ThreeWireStrip::displayGreenOdd() {
   digitalWrite(_center_pin, LOW);
   pinMode(_center_pin, INPUT);
   
@@ -204,7 +200,7 @@ void FourWireStrip::displayGreenOdd() {
   analogWrite(_blue_pin, _green_odd*_brightness/255);
 }
 
-void FourWireStrip::displayGreenEven() {
+void ThreeWireStrip::displayGreenEven() {
   digitalWrite(_center_pin, LOW);
   pinMode(_center_pin, INPUT);
   
@@ -215,7 +211,7 @@ void FourWireStrip::displayGreenEven() {
   digitalWrite(_blue_pin, LOW);
 }
 
-void FourWireStrip::displayBlueOdd() {
+void ThreeWireStrip::displayBlueOdd() {
   pinMode(_center_pin, OUTPUT);
   digitalWrite(_center_pin, LOW);
   
@@ -226,7 +222,7 @@ void FourWireStrip::displayBlueOdd() {
   analogWrite(_blue_pin, _blue_odd*_brightness/255);
 }
 
-void FourWireStrip::displayBlueEven() {
+void ThreeWireStrip::displayBlueEven() {
   pinMode(_center_pin, OUTPUT);
   analogWrite(_center_pin, _blue_even*_brightness/255);
   
@@ -238,6 +234,6 @@ void FourWireStrip::displayBlueEven() {
 }
 
 
-void FourWireStrip::fade(fl_color fromColor, fl_color toColor) {
+void ThreeWireStrip::fade(fl_color fromColor, fl_color toColor) {
 
 }

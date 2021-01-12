@@ -1,11 +1,13 @@
-# Four Wire Fairy Lights
+# Three (4?) Wire Fairy Lights
 
 (disclaimer: this is all about the ones we've poked at, if you have a strip that works different let us know!)
+
+We're calling it three wire instead of four since the center wire is soldered to a "bypass" wire at the far end of the strip. Still no idea why they do that.
 
 ## Configuration (theory)
 
 ### The wires
-The four wire strips work by having a red, green and blue all on the same strip, but with some sharing of pins.
+The three wire strips work by having a red, green and blue all on the same strip, but with some sharing of pins.
 
 Specifically, the red LED has one pin of it's own, and one shared with the green LED. Green shares the one with red, and the other with blue. the blue LED has one of it's own in addition to the one shared with green.
 
@@ -46,7 +48,7 @@ To use the even/odd functions, you'll need to create an instance directly or cas
 ```
 #include <FairyLights.h>
 pin pins[4] = { BYPASS_PIN, CENTER_PIN, RED_PIN, BLUE_PIN };
-FairyLights strip = FairyLightsFactory(FourWire, pins);
+FairyLights strip = FairyLightsFactory(ThreeWire, pins);
 ```
 
 #### Direct method
@@ -54,5 +56,5 @@ FairyLights strip = FairyLightsFactory(FourWire, pins);
 ```
 #include <FairyLights.h>
 
-FourWireStrip strip = FairyLightsFactory(BYPASS_PIN, CENTER_PIN, RED_PIN, BLUE_PIN);
+ThreeWireStrip strip = FairyLightsFactory(BYPASS_PIN, CENTER_PIN, RED_PIN, BLUE_PIN);
 ```
