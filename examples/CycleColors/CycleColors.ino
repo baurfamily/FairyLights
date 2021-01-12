@@ -1,20 +1,33 @@
+// this example shows how the same interface is offered for the differnt light strips
+// however, the inherent differences in how they work may yield weird results when 
+// running together like this (in this case, each one will look odd when the other is
+// displayed)
 
-#define VCC_PIN 13
+#include <FairyLights.h>
 
-#include <FairlyLights.h>
+// for 2-wire / M1359L light strip
+#define VCC_PIN 6
 
-FairlyLights strip(VCC_PIN, FL_M1359L);
+pin pins_2wire[1] = { VCC_PIN };
+FairyLights *strip2 = FairyLightsFactory( TwoWire, pins_2wire);
+
+// for 3 wire light strip
+#define CENTER_PIN 12
+#define RED_PIN 11
+#define BLUE_PIN 10
+
+pin pins_3wire[3] = { CENTER_PIN, RED_PIN, BLUE_PIN };
+FairyLights *strip3 = FairyLightsFactory( ThreeWire, pins_3wire);
 
 void setup() {
-  strip.on();
-  strip.setColor(FL_BLUE);
+  strip2->setColor(Black);
+  strip3->setColor(Black);
 }
 
 void loop() {
-  static int color = FL_BLUE;
+  strip2->nextColor();
+  strip2->display(1000);
 
-  strip.setColor((color++)%8);
-
-  delay(1000);
+  strip3->nextColor();
+  strip3->display(1000);
 }
-
