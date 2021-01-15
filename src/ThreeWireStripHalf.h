@@ -1,9 +1,8 @@
-#ifndef THREE_WIRE_h
-#define THREE_WIRE_h
+#ifndef THREE_WIRE_HALF_h
+#define THREE_WIRE_HALF_h
 
 #include <Arduino.h>
 #include "FairyLights.h"
-#include "ThreeWireStripHalf.h"
 
 // these were fairly arbitrary picks
 // it looked good to *our* eyes
@@ -13,12 +12,9 @@
 #define pwm_value(x) map(x, 0, 255, TW_PWM_MIN, TW_PWM_MAX)
 // #define pwm_value(x) x
 
-class ThreeWireStrip: public FairyLights {
+class ThreeWireStripHalf: public FairyLights {
   public:
-    ThreeWireStrip(pin center, pin red, pin blue);
-
-    ThreeWireStripHalf *oddStrip();
-    ThreeWireStripHalf *evenStrip();
+    ThreeWireStripHalf(pin center, pin red, pin blue);
 
     void setRGB(byte red, byte green, byte blue);
 
@@ -34,8 +30,24 @@ class ThreeWireStrip: public FairyLights {
     void fade(fl_color fromColor, fl_color toColor);
 
   private:
-    ThreeWireStripHalf* _odd_strip;
-    ThreeWireStripHalf* _even_strip;
+    pin _left_pin;
+    pin _center_pin;
+    pin _right_pin;
+
+    unsigned long _brightness;
+    
+    // the underlying RGB values might get out of 
+    // sync from the "color" - this is expected    
+    fl_color _color;
+    byte _red;
+    byte _green;
+    byte _blue;
+
+    void displayBlack();
+
+    void displayRed();
+    void displayGreen();
+    void displayBlue();
 };
 
 #endif
