@@ -12,11 +12,11 @@ pin pins_2wire[1] = { VCC_PIN };
 FairyLights *strip2 = FairyLightsFactory( TwoWire, pins_2wire);
 
 // for 3 wire light strip
-#define CENTER_PIN 12
-#define RED_PIN 11
-#define BLUE_PIN 10
+#define LEFT_PIN 12
+#define CENTER_PIN 11
+#define RIGHT_PIN 10
 
-pin pins_3wire[3] = { CENTER_PIN, RED_PIN, BLUE_PIN };
+pin pins_3wire[3] = { LEFT_PIN, CENTER_PIN, RIGHT_PIN };
 FairyLights *strip3 = FairyLightsFactory( ThreeWire, pins_3wire);
 
 void setup() {
