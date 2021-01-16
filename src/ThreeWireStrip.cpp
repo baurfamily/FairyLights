@@ -2,8 +2,18 @@
 
 ThreeWireStrip::ThreeWireStrip(pin left, pin center, pin right)
 {
-  _odd_strip = new ThreeWireStripHalf(left, center, right);
-  _even_strip = new ThreeWireStripHalf(left, center, right);
+  _odd_strip = new ThreeWireStripHalf(left, center, right, false);
+  _even_strip = new ThreeWireStripHalf(left, center, right, true);
+}
+
+ThreeWireStripHalf* ThreeWireStrip::oddNodes()
+{
+  return _odd_strip;
+}
+
+ThreeWireStripHalf* ThreeWireStrip::evenNodes()
+{
+  return _even_strip;
 }
 
 // overrides

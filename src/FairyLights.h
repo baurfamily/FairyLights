@@ -55,4 +55,9 @@ class FairyLights
 
 FairyLights* FairyLightsFactory(fl_type lightType, pin pins[]);
 
+void pinOff(pin p);
+void pinLow(pin p);
+void pinHigh(pin p);
+void pinHigh(pin p, byte val);
+
 #endif

@@ -22,6 +22,9 @@ class ThreeWireStrip: public FairyLights {
 
     void setRGB(byte red, byte green, byte blue);
 
+    ThreeWireStripHalf* oddNodes();
+    ThreeWireStripHalf* evenNodes();
+
     // overrides
     void setBlack();
     void nextColor();

@@ -14,7 +14,7 @@
 
 class ThreeWireStripHalf: public FairyLights {
   public:
-    ThreeWireStripHalf(pin center, pin red, pin blue);
+    ThreeWireStripHalf(pin left, pin center, pin right, bool reversed);
 
     void setRGB(byte red, byte green, byte blue);
 
@@ -30,6 +30,8 @@ class ThreeWireStripHalf: public FairyLights {
     void fade(fl_color fromColor, fl_color toColor);
 
   private:
+    bool _reversed;
+
     pin _left_pin;
     pin _center_pin;
     pin _right_pin;

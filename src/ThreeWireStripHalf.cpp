@@ -1,7 +1,9 @@
 #include "ThreeWireStripHalf.h"
 
-ThreeWireStripHalf::ThreeWireStripHalf(pin left, pin center, pin right)
+ThreeWireStripHalf::ThreeWireStripHalf(pin left, pin center, pin right, bool reversed)
 {
+  _reversed = reversed;
+
   _left_pin = left;
   _center_pin = center;
   _right_pin = right;
@@ -21,11 +23,6 @@ void ThreeWireStripHalf::setBlack()
   _red = 0;
   _green = 0;
   _blue = 0;
-}
-
-void ThreeWireStripHalf::nextColor()
-{
-  nextColor();
 }
 
 void ThreeWireStripHalf::nextColor()
@@ -50,11 +47,6 @@ void ThreeWireStripHalf::setColor(fl_color value)
     case Cyan:    setRGB(  0, 255, 255); break;
     case White:   setRGB(255, 255, 255); break;
   }
-}
-
-void ThreeWireStripHalf::setRGB(byte red, byte green, byte blue)
-{
-  setRGB(red, green, blue);
 }
 
 void ThreeWireStripHalf::setRGB(byte red, byte green, byte blue)
@@ -93,52 +85,31 @@ void ThreeWireStripHalf::display(int approxMs)
 }
 
 void ThreeWireStripHalf::displayBlack()
-{  
-  pinMode(_center_pin, OUTPUT);
-  digitalWrite(_center_pin, HIGH);
-  
-  pinMode(_left_pin, OUTPUT);
-  digitalWrite(_left_pin, LOW);
-  
-  digitalWrite(_right_pin, LOW);
-  pinMode(_right_pin, INPUT);
+{
+  _reversed ? pinLow(_left_pin) : pinHigh(_left_pin);
+  _reversed ? pinHigh(_center_pin) : pinLow(_center_pin);
+  pinOff(_right_pin);
 }
-
 
 void ThreeWireStripHalf::displayRed()
 {
-  pinMode(_center_pin, OUTPUT);
-  digitalWrite(_center_pin, LOW);
-  
-  pinMode(_left_pin, OUTPUT);
-  analogWrite(_left_pin, _red*_brightness/255);
-  
-  digitalWrite(_right_pin, LOW);
-  pinMode(_right_pin, INPUT);
+  _reversed ? pinHigh(_left_pin, _red*_brightness/255) : pinLow(_left_pin);
+  _reversed ? pinLow(_center_pin) : pinHigh(_center_pin, _red*_brightness/255);
+  pinOff(_right_pin);
 }
 
 void ThreeWireStripHalf::displayGreen()
 {
-  digitalWrite(_center_pin, LOW);
-  pinMode(_center_pin, INPUT);
-  
-  pinMode(_left_pin, OUTPUT);
-  analogWrite(_left_pin, _green*_brightness/255);
-  
-  pinMode(_right_pin, OUTPUT);
-  digitalWrite(_right_pin, LOW);
+  _reversed ? pinHigh(_left_pin, _green*_brightness/255) : pinLow(_left_pin);
+  pinOff(_center_pin);
+  _reversed ? pinLow(_right_pin) : pinHigh(_right_pin, _green*_brightness/255);
 }
 
 void ThreeWireStripHalf::displayBlue()
 {
-  pinMode(_center_pin, OUTPUT);
-  analogWrite(_center_pin, _blue*_brightness/255);
-  
-  digitalWrite(_left_pin, LOW);
-  pinMode(_left_pin, INPUT);
-  
-  pinMode(_right_pin, OUTPUT);
-  digitalWrite(_right_pin, LOW);
+  pinOff(_left_pin);
+  _reversed ? pinHigh(_center_pin, _blue*_brightness/255) : pinLow(_center_pin);
+  _reversed ? pinLow(_right_pin) : pinHigh(_right_pin, _blue*_brightness/255);
 }
 
 void ThreeWireStripHalf::fade(fl_color fromColor, fl_color toColor) {
