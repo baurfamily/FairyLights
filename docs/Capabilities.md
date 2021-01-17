@@ -2,8 +2,8 @@
 
 I don't know the best way to keep track of these things... I *thought* I ordered the same one off Amazon twice, but got two different products... even so, I listed the ASIN.
 
-|SKU/ASIN|Brand|Wires|Independent|Length|LED Count|
-|---|---|---|---|---|---|---|
+| SKU/ASIN | Brand | Wires | Independent | Length | LED Count |
+|---|---|---|---|---|---|
 |X002MU7YEH / B08GX7WP84|GIMGOM|3|Yes (count?)|66 ft (33x2)|200 (100x2)|
 |X002IFWDHT / B086LC36Q3|Minetom|4 + bypass|No|66 ft (33x2)|200 (100x2)|
 |X002M8PT23|Minetom|3 + bypass|Yes (2 colors)|33 ft|100|
