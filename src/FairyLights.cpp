@@ -2,6 +2,7 @@
 #include "FairyLights.h"
 #include "TwoWireStrip.h"
 #include "ThreeWireStrip.h"
+#include "FourWireStrip.h"
 
 // warning: we don't currently do any validation that you're
 // passing in sane inputs for the type specified... it'll
@@ -13,10 +14,11 @@ FairyLights* FairyLightsFactory(fl_type lightType, pin pins[]) {
       return new TwoWireStrip( pins[0] );
     case ThreeWire:
       return new ThreeWireStrip( pins[0], pins[1], pins[2] );
+    case FourWire:
+      return new FourWireStrip( pins[0], pins[1], pins[2], pins[3] );
+    default:
+      return nullptr;
   }
-
-  //cheating for now...
-  return new TwoWireStrip( pins[0] );
 }
 
 void pinOff(pin p)

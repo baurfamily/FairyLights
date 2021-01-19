@@ -1,7 +1,6 @@
 #ifndef FL_h
 #define FL_h
 
-
 #include <Arduino.h>
 
 typedef int pin;
@@ -10,6 +9,7 @@ enum fl_type {
   M1359L,
   TwoWire,
   ThreeWire,
+  FourWire,
   TypeCount
 };
 
