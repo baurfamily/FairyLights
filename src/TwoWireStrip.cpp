@@ -141,7 +141,8 @@ void TwoWireStrip::display(int approxMs)
   }
 }
 
-void TwoWireStrip::fade(fl_color fromColor, fl_color toColor)
+// ignores last parameter for now!
+void TwoWireStrip::fade(fl_color fromColor, fl_color toColor, int approxMs)
 {
   reset();
 

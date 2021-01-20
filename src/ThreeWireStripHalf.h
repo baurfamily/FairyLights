@@ -27,8 +27,8 @@ class ThreeWireStripHalf: public FairyLights {
     void display();
     void display(int approxMs);
 
-    void fade(fl_color fromColor, fl_color toColor);
-
+    void fade(fl_color fromColor, fl_color toColor, int approxMs);
+    
   private:
     bool _reversed;
 

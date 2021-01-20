@@ -4,18 +4,17 @@
 #include <Arduino.h>
 #include "FairyLights.h"
 
-// these were fairly arbitrary picks
-// it looked good to *our* eyes
-#define TW_PWM_MIN  100
-#define TW_PWM_MAX 1000
-
-#define pwm_value(x) map(x, 0, 255, TW_PWM_MIN, TW_PWM_MAX)
-// #define pwm_value(x) x
+struct RGB {
+  byte red;
+  byte green;
+  byte blue;
+};
 
 class FourWireStrip: public FairyLights {
   public:
     FourWireStrip(pin red, pin green, pin blue, pin vcc);
 
+    void FourWireStrip::setRGB(RGB rgb);
     void setRGB(byte red, byte green, byte blue);
 
     // overrides
@@ -27,7 +26,7 @@ class FourWireStrip: public FairyLights {
     void display();
     void display(int approxMs);
 
-    void fade(fl_color fromColor, fl_color toColor);
+    void fade(fl_color fromColor, fl_color toColor, int approxMs);
 
   private:
     pin _vcc_pin;
@@ -40,9 +39,7 @@ class FourWireStrip: public FairyLights {
     // the underlying RGB values might get out of 
     // sync from the "color" - this is expected    
     fl_color _color;
-    byte _red;
-    byte _green;
-    byte _blue;
+    RGB _rgb;
 };
 
 #endif
