@@ -31,8 +31,8 @@ class TwoWireStrip: public FairyLights {
     void display();
     void display(int approxMs);
 
-    void fade(fl_color fromColor, fl_color toColor);
-
+    void fade(fl_color fromColor, fl_color toColor, int approxMs);
+    
   private:
     byte _vcc_pin;
     byte _color; // actually, 3 bits

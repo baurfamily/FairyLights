@@ -14,17 +14,17 @@ FourWireStrip::FourWireStrip(pin red, pin green, pin blue, pin vcc=0)
 
   // set all to white
   _color = White;
-  _red = 255;
-  _green = 255;
-  _blue = 255;
+  _rgb.red = 255;
+  _rgb.green = 255;
+  _rgb.blue = 255;
 }
 
 // overrides
 void FourWireStrip::setBlack()
 {
-  _red = 0;
-  _green = 0;
-  _blue = 0;
+  _rgb.red = 0;
+  _rgb.green = 0;
+  _rgb.blue = 0;
 }
 
 void FourWireStrip::nextColor()
@@ -51,9 +51,14 @@ void FourWireStrip::setColor(fl_color value)
   }
 }
 
+void FourWireStrip::setRGB(RGB rgb)
+{
+  setRGB( rgb.red, rgb.green, rgb.blue );
+}
+
 void FourWireStrip::setRGB(byte red, byte green, byte blue)
 {
-  _red = red; _green = green; _blue = blue;
+  _rgb.red = red; _rgb.green = green; _rgb.blue = blue;
 }
 
 void FourWireStrip::setBrightness(byte value)
@@ -63,9 +68,9 @@ void FourWireStrip::setBrightness(byte value)
 
 void FourWireStrip::display()
 {
-  analogWrite(_red_pin, (255 - _red));
-  analogWrite(_green_pin, (255 - _green));
-  analogWrite(_blue_pin, (255 - _blue));
+  analogWrite(_red_pin, (255 - _rgb.red * _brightness/255));
+  analogWrite(_green_pin, (255 - _rgb.green * _brightness/255));
+  analogWrite(_blue_pin, (255 - _rgb.blue * _brightness/255));
 }
 
 void FourWireStrip::display(int approxMs)
@@ -77,6 +82,20 @@ void FourWireStrip::display(int approxMs)
   }
 }
 
-void FourWireStrip::fade(fl_color fromColor, fl_color toColor) {
+void FourWireStrip::fade(fl_color fromColor, fl_color toColor, int approxMs) {
+  setColor(toColor);
+  RGB toRGB = _rgb;
 
+  setColor(fromColor);
+  RGB fromRGB = _rgb;
+
+  for (int i=0; i<approxMs; i++) {
+    RGB betweenRGB = {
+      map(i, 0, approxMs, fromRGB.red, toRGB.red),
+      map(i, 0, approxMs, fromRGB.green, toRGB.green),
+      map(i, 0, approxMs, fromRGB.blue, toRGB.blue),
+    };
+    setRGB(betweenRGB);
+    display(1);
+  }
 }

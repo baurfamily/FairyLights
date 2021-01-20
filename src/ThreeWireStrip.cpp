@@ -63,6 +63,7 @@ void ThreeWireStrip::display(int approxMs)
   }
 }
 
-void ThreeWireStrip::fade(fl_color fromColor, fl_color toColor) {
+void ThreeWireStrip::fade(fl_color fromColor, fl_color toColor, int approxMs)
+{
 
 }
